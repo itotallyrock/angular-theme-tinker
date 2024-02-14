@@ -1,0 +1,41 @@
+@use 'sass:string' as string;
+@use '@angular/material' as mat;
+
+
+:host {
+    $palettes: 'primary', 'accent', 'warn', 'success', 'error';
+    $variants: '50', '100', '200', '300', '400', '500', '600', '700', '800', '900', 'A100', 'A200', 'A400', 'A700';
+
+    display: grid;
+    grid-template-columns: repeat(length($palettes), auto);
+    align-items: stretch;
+    justify-items: stretch;
+
+    .cell {
+        font-family: "Fira Mono", "Cascadia Mono", monospace;
+        font-size: 1rem;
+        display: flex;
+        justify-content: space-between;
+        height: 1.4rem;
+        padding: 14px;
+        aspect-ratio: 2 / 1;
+        text-align: center;
+        transform-origin: center center;
+        transition: all 0.08s ease-in-out;
+        &:hover {
+            transform: scale(1.1);
+            @include mat.elevation(2);
+        }
+
+        @each $palette in $palettes {
+            @each $variant in $variants {
+                $lower-case-variant: string.to-lower-case($variant);
+
+                &.#{$palette}-#{$lower-case-variant} {
+                    background-color: var(--theme-#{$palette}-#{$variant});
+                    color: var(--theme-#{$palette}-contrast-#{$variant});
+                }
+            }
+        }
+    }
+}

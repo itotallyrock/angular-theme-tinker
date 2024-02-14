@@ -1,27 +1,39 @@
 @use '@angular/material' as mat;
 @use 'sass:color' as color;
 @use 'sass:map' as map;
-
+@use 'sass:list' as list;
 
 @mixin theme-app() {
-    $primary-color: #607386;
+    $primary-color-light: #d2d3d7;
+    $primary-color-dark: #3c434f;
     $accent-color: #3494f8;
     $warn-color: #e8bc2c;
     $error-color: #f44336;
     $success-color: #36f45c;
+    $background-color-light: mix($primary-color-light, white, 90%);
+    $text-color-light: mix($primary-color-light, black, 10%);
+    $background-color-dark: mix($primary-color-dark, black, 90%);
+    $text-color-dark: mix($primary-color-dark, white, 10%);
 
-    $color-config: create-color-config($primary-color, $accent-color, $warn-color, $error-color, $success-color);
     $typography-config: mat.define-typography-config();
 
-    $light-theme: create-theme((color: $color-config, typography: $typography-config, density: 0), $is-dark: false);
-    $dark-theme: create-theme((color: $color-config, typography: $typography-config, density: 0), $is-dark: true);
+    $light-theme: create-theme((
+            color: create-color-config($primary-color-light, $accent-color, $warn-color, $error-color, $success-color, $background-color-light, $text-color-light),
+            typography: $typography-config,
+            density: 0), $is-dark: false);
+    $dark-theme: create-theme((
+            color: create-color-config($primary-color-dark, $accent-color, $warn-color, $error-color, $success-color, $background-color-dark, $text-color-dark),
+            typography: $typography-config,
+            density: 0), $is-dark: true);
 
-    // Apply themes to app using operating system preference
-    @media (prefers-color-scheme: light) {
+    @include mat.all-component-typographies($light-theme);
+    .light-themed {
         @include mat.all-component-colors($light-theme);
+        @include add-theme-css-variables($light-theme);
     }
-    @media (prefers-color-scheme: dark) or (prefers-color-scheme: no-preference) {
+    .dark-themed {
         @include mat.all-component-colors($dark-theme);
+        @include add-theme-css-variables($dark-theme);
     }
 }
 
@@ -39,55 +51,80 @@
     @return $theme;
 }
 
-@function create-color-config($primary, $accent, $warn, $error, $success) {
+@function create-color-config($primary, $accent, $warn, $error, $success, $background-color, $text-color) {
     $primary-palette: create-palette($primary);
     @return (
         primary: $primary-palette,
         accent: create-palette($accent),
-        warn: create-palette($warn),
+        warn: create-palette($warn, ),
         error: create-palette($error),
         success: create-palette($success),
         background: (
-            background: map.get($primary-palette, 50),
+            background: $background-color,
         ),
         foreground: (
-            text: map.get($primary-palette, text),
+            text: $text-color,
         )
     );
 }
 
-@function create-palette($color, $lighter: white, $darker: black) {
+@function create-palette($color, $lighter: color.mix($color, white, 27%), $darker: color.mix($color, black, 27%)) {
     @return mat.define-palette((
-        50: color.mix($color, $lighter, 90%),
-        100: color.mix($color, $lighter, 70%),
-        200: color.mix($color, $lighter, 50%),
-        300: color.mix($color, $lighter, 30%),
-        400: color.mix($color, $lighter, 10%),
+        50: color.mix($lighter, $color, 60%),
+        100: color.mix($lighter, $color, 50%),
+        200: color.mix($lighter, $color, 30%),
+        300: color.mix($lighter, $color, 20%),
+        400: color.mix($lighter, $color, 10%),
         500: $color,
-        600: color.mix($color, $darker, 10%),
-        700: color.mix($color, $darker, 30%),
-        800: color.mix($color, $darker, 50%),
-        900: color.mix($color, $darker, 70%),
-        A100: color.mix($color, $lighter, 90%),
-        A200: color.mix($color, $lighter, 70%),
-        A400: color.mix($color, $darker, 70%),
-        A700: color.mix($color, $darker, 90%),
+        600: color.mix($darker, $color, 10%),
+        700: color.mix($darker, $color, 20%),
+        800: color.mix($darker, $color, 30%),
+        900: color.mix($darker, $color, 50%),
+        A100: color.mix($lighter, $color, 25%),
+        A200: color.mix($lighter, $color, 15%),
+        A400: color.mix($lighter, $color, 5%),
+        A700: color.mix($darker, $color, 10%),
         contrast: (
-            50: #000000,
-            100: #000000,
-            200: #000000,
-            300: #000000,
-            400: #ffffff,
-            500: #ffffff,
-            600: #ffffff,
-            700: #ffffff,
-            800: #ffffff,
-            900: #ffffff,
-            A100: #000000,
-            A200: #000000,
-            A400: #ffffff,
-            A700: #ffffff,
-            contrast: #000000,
+            50: $darker,
+            100: $darker,
+            200: $darker,
+            300: $darker,
+            400: $darker,
+            500: $darker,
+            600: $lighter,
+            700: $lighter,
+            800: $lighter,
+            900: $lighter,
+            A100: $darker,
+            A200: $darker,
+            A400: $lighter,
+            A700: $lighter,
+            contrast: $darker
         ),
     ), $text: 50);
+}
+
+/**
+ Set vanilla CSS variables based on theme for components to use
+ */
+@mixin add-theme-css-variables($theme) {
+    $color-config: mat.get-color-config($theme);
+    $theme-primary-map: map-get($color-config, primary);
+    $theme-accent-map: map-get($color-config, accent);
+    $theme-warn-map: map-get($color-config, warn);
+    $theme-error-map: map-get($color-config, error);
+    $theme-success-map: map-get($color-config, success);
+
+    $palettes: ('primary', $theme-primary-map), ('accent', $theme-accent-map), ('warn', $theme-warn-map),
+            ('success', $theme-success-map), ('error', $theme-error-map);
+    $variants: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 'A100', 'A200', 'A400', 'A700';
+
+    @each $palette-tuple in $palettes {
+        $palette-name: list.nth($palette-tuple, 1);
+        $palette: list.nth($palette-tuple, 2);
+        @each $variant in $variants {
+            --theme-#{$palette-name}-#{$variant}: #{mat.get-color-from-palette($palette, $variant)};
+            --theme-#{$palette-name}-contrast-#{$variant}: #{mat.get-contrast-color-from-palette($palette, $variant)};
+        }
+    }
 }

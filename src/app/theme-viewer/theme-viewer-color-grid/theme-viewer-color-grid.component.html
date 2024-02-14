@@ -1,0 +1,9 @@
+
+@for (variant of colorVariants; track variant) {
+    @for (palette of colorPalettes; track palette) {
+        <div [class]="palette.toLowerCase() + '-' + variant.toLowerCase()" class="cell">
+            <span>{{ palette }}</span>
+            <span>{{ variant }}</span>
+        </div>
+    }
+}
