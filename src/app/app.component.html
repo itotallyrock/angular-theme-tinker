@@ -1,23 +1,35 @@
-@defer (on immediate) {
-
-    <button mat-flat-button style="line-height: 2rem; color: var(--theme-accent-constrast-500); background-color: var(--theme-accent, #3494f8);" (click)="accentPicker.click()">Accent Color</button>
-    <input style="display: none;" #accentPicker type="color" value="#3494f8" (change)="updateColor($event, 'accent')">
-
-
-    <button mat-flat-button style="line-height: 2rem; color: var(--theme-warn-constrast-500); background-color: var(--theme-warn, #e8bc2c);" (click)="warnPicker.click()">Warn Color</button>
-    <input style="display: none;" #warnPicker type="color" value="#e8bc2c" (change)="updateColor($event, 'warn')">
-
-
-    <button mat-flat-button style="line-height: 2rem; color: var(--theme-success-constrast-500); background-color: var(--theme-success, #36f45c);" (click)="successPicker.click()">Success Color</button>
-    <input style="display: none;" #successPicker type="color" value="#36f45c" (change)="updateColor($event, 'success')">
-
-
-    <button mat-flat-button style="line-height: 2rem; color: var(--theme-error-constrast-500); background-color: var(--theme-error, #f44336);" (click)="errorPicker.click()">Error Color</button>
-    <input style="display: none;" #errorPicker type="color" value="#f44336" (change)="updateColor($event, 'error')">
-
-
-    <div class="split-grid">
-        <theme-viewer class="light-themed mat-app-background" />
-        <theme-viewer class="dark-themed mat-app-background" />
-    </div>
-}
+<main>
+    @defer (on immediate) {
+        <div class="color-palette-header">
+            <h1>Color Palettes</h1>
+            <div>
+                <div class="color-picker">
+                    <button mat-flat-button style="color: var(--theme-accent-constrast-500); background-color: var(--theme-accent, #3494f8);" (click)="accentPicker.click()">Accent Color</button>
+                    <input #accentPicker type="color" value="#3494f8" (change)="updateColor($event, 'accent')">
+                </div>
+                <div class="color-picker">
+                    <button mat-flat-button style="color: var(--theme-warn-constrast-500); background-color: var(--theme-warn, #e8bc2c);" (click)="warnPicker.click()">Warn Color</button>
+                    <input #warnPicker type="color" value="#e8bc2c" (change)="updateColor($event, 'warn')">
+                </div>
+                <div class="color-picker">
+                    <button mat-flat-button style="color: var(--theme-success-constrast-500); background-color: var(--theme-success, #36f45c);" (click)="successPicker.click()">Success Color</button>
+                    <input #successPicker type="color" value="#36f45c" (change)="updateColor($event, 'success')">
+                </div>
+                <div class="color-picker">
+                    <button mat-flat-button style="color: var(--theme-error-constrast-500); background-color: var(--theme-error, #f44336);" (click)="errorPicker.click()">Error Color</button>
+                    <input #errorPicker type="color" value="#f44336" (change)="updateColor($event, 'error')">
+                </div>
+            </div>
+        </div>
+        <div class="split-grid">
+            @for (themeType of ['Light', 'Dark']; track themeType) {
+                <mat-card [class]="themeType.toLowerCase() + '-themed'" class="mat-app-background">
+                    <mat-card-header>
+                        <mat-card-title>{{themeType}} Theme</mat-card-title>
+                    </mat-card-header>
+                    <theme-viewer />
+                </mat-card>
+            }
+        </div>
+    }
+</main>

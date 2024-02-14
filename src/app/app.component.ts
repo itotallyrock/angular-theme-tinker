@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { ThemeViewerComponent } from './theme-viewer/theme-viewer.component';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardFooter, MatCardHeader, MatCardTitle } from '@angular/material/card';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, ThemeViewerComponent, MatButton],
+    imports: [RouterOutlet, ThemeViewerComponent, MatButton, MatCard, MatCardTitle, MatCardHeader, MatCardFooter],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
 })
