@@ -1,4 +1,7 @@
 @defer (on immediate) {
+    <mat-form-field>
+        <input type="color" value="#ff0000" matInput (change)="updateAccentColor($event)">
+    </mat-form-field>
     <div class="split-grid">
         <theme-viewer class="light-themed mat-app-background" />
         <theme-viewer class="dark-themed mat-app-background" />

@@ -6,7 +6,7 @@
 @mixin theme-app() {
     $primary-color-light: #e5e6ea;
     $primary-color-dark: #3c434f;
-    $accent-color: #3494f8;
+    $accent-color: var(--theme-accent, #3494f8);
     $warn-color: #e8bc2c;
     $error-color: #f44336;
     $success-color: #36f45c;
@@ -68,38 +68,39 @@
     );
 }
 
-@function create-palette($color, $lighter: color.mix($color, white, 15%), $darker: color.mix($color, black, 15%)) {
+@function create-palette($color, $lighter: color-mix(in srgb, $color 15%, white), $darker: color-mix(in srgb, $color 15%, black)) {
     $base-colors: (
-        50: color.mix($lighter, $color, 60%),
-        100: color.mix($lighter, $color, 50%),
-        200: color.mix($lighter, $color, 30%),
-        300: color.mix($lighter, $color, 20%),
-        400: color.mix($lighter, $color, 10%),
+        50: color-mix(in srgb, $lighter 60%, $color),
+        100: color-mix(in srgb, $lighter 50%, $color),
+        200: color-mix(in srgb, $lighter 30%, $color),
+        300: color-mix(in srgb, $lighter 20%, $color),
+        400: color-mix(in srgb, $lighter 10%, $color),
         500: $color,
-        600: color.mix($darker, $color, 10%),
-        700: color.mix($darker, $color, 20%),
-        800: color.mix($darker, $color, 30%),
-        900: color.mix($darker, $color, 50%),
-        A100: color.mix($lighter, $color, 25%),
-        A200: color.mix($lighter, $color, 15%),
-        A400: color.mix($lighter, $color, 5%),
-        A700: color.mix($darker, $color, 10%)
+        600: color-mix(in srgb, $darker 10%, $color),
+        700: color-mix(in srgb, $darker 20%, $color),
+        800: color-mix(in srgb, $darker 30%, $color),
+        900: color-mix(in srgb, $darker 50%, $color),
+        A100: color-mix(in srgb, $lighter 25%, $color),
+        A200: color-mix(in srgb, $lighter 15%, $color),
+        A400: color-mix(in srgb, $lighter 5%, $color),
+        A700: color-mix(in srgb, $darker 10%, $color)
     );
+    // TODO: Use HSL to get luminance and use that to determine contrast color
     $contrast-colors: (
-        50: if(color.lightness(map.get($base-colors, 50)) < 50%, $lighter, $darker),
-        100: if(color.lightness(map.get($base-colors, 100)) < 50%, $lighter, $darker),
-        200: if(color.lightness(map.get($base-colors, 200)) < 50%, $lighter, $darker),
-        300: if(color.lightness(map.get($base-colors, 300)) < 50%, $lighter, $darker),
-        400: if(color.lightness(map.get($base-colors, 400)) < 50%, $lighter, $darker),
-        500: if(color.lightness(map.get($base-colors, 500)) < 50%, $lighter, $darker),
-        600: if(color.lightness(map.get($base-colors, 600)) < 50%, $lighter, $darker),
-        700: if(color.lightness(map.get($base-colors, 700)) < 50%, $lighter, $darker),
-        800: if(color.lightness(map.get($base-colors, 800)) < 50%, $lighter, $darker),
-        900: if(color.lightness(map.get($base-colors, 900)) < 50%, $lighter, $darker),
-        A100: if(color.lightness(map.get($base-colors, A100)) < 50%, $lighter, $darker),
-        A200: if(color.lightness(map.get($base-colors, A200)) < 50%, $lighter, $darker),
-        A400: if(color.lightness(map.get($base-colors, A400)) < 50%, $lighter, $darker),
-        A700: if(color.lightness(map.get($base-colors, A700)) < 50%, $lighter, $darker),
+        50: $darker,//if(color.lightness(map.get($base-colors, 50)) < 50%, $lighter, $darker),
+        100: $darker,//if(color.lightness(map.get($base-colors, 100)) < 50%, $lighter, $darker),
+        200: $darker,//if(color.lightness(map.get($base-colors, 200)) < 50%, $lighter, $darker),
+        300: $darker,//if(color.lightness(map.get($base-colors, 300)) < 50%, $lighter, $darker),
+        400: $darker,//if(color.lightness(map.get($base-colors, 400)) < 50%, $lighter, $darker),
+        500: $darker,//if(color.lightness(map.get($base-colors, 500)) < 50%, $lighter, $darker),
+        600: $lighter,//if(color.lightness(map.get($base-colors, 600)) < 50%, $lighter, $darker),
+        700: $lighter,//if(color.lightness(map.get($base-colors, 700)) < 50%, $lighter, $darker),
+        800: $lighter,//if(color.lightness(map.get($base-colors, 800)) < 50%, $lighter, $darker),
+        900: $lighter,//if(color.lightness(map.get($base-colors, 900)) < 50%, $lighter, $darker),
+        A100: $darker,//if(color.lightness(map.get($base-colors, A100)) < 50%, $lighter, $darker),
+        A200: $darker,//if(color.lightness(map.get($base-colors, A200)) < 50%, $lighter, $darker),
+        A400: $lighter,//if(color.lightness(map.get($base-colors, A400)) < 50%, $lighter, $darker),
+        A700: $lighter,//if(color.lightness(map.get($base-colors, A700)) < 50%, $lighter, $darker),
     );
     @return mat.define-palette(map.merge($base-colors, (contrast: $contrast-colors)), $text: 50);
 }
