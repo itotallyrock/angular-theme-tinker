@@ -4,16 +4,20 @@
 @use 'sass:list' as list;
 
 @mixin theme-app() {
-    $primary-color-light: #e5e6ea;
-    $primary-color-dark: #3c434f;
+    // Dark/light specific colors
+    $primary-color-light: var(--theme-primary-light, #e5e6ea);
+    $primary-color-dark: var(--theme-primary-dark, #3c434f);
+    // Colors based on dark/light specific colors
+    $background-color-light: color-mix(in srgb, $primary-color-light 10%, white);
+    $text-color-light: color-mix(in srgb, $primary-color-light 10%, black);
+    $background-color-dark: color-mix(in srgb, $primary-color-dark 90%, white);
+    $text-color-dark: color-mix(in srgb, $primary-color-dark 10%, white);
+
+    // Theme colors
     $accent-color: var(--theme-accent, #3494f8);
-    $warn-color: #e8bc2c;
-    $error-color: #f44336;
-    $success-color: #36f45c;
-    $background-color-light: mix($primary-color-light, white, 10%);
-    $text-color-light: mix($primary-color-light, black, 10%);
-    $background-color-dark: mix($primary-color-dark, white, 90%);
-    $text-color-dark: mix($primary-color-dark, white, 10%);
+    $warn-color: var(--theme-warn, #e8bc2c);
+    $error-color: var(--theme-error, #f44336);
+    $success-color: var(--theme-success, #36f45c);
 
     $typography-config: mat.define-typography-config();
 
