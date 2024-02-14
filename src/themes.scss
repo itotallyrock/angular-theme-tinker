@@ -4,15 +4,15 @@
 @use 'sass:list' as list;
 
 @mixin theme-app() {
-    $primary-color-light: #d2d3d7;
+    $primary-color-light: #e5e6ea;
     $primary-color-dark: #3c434f;
     $accent-color: #3494f8;
     $warn-color: #e8bc2c;
     $error-color: #f44336;
     $success-color: #36f45c;
-    $background-color-light: mix($primary-color-light, white, 90%);
+    $background-color-light: mix($primary-color-light, white, 10%);
     $text-color-light: mix($primary-color-light, black, 10%);
-    $background-color-dark: mix($primary-color-dark, black, 90%);
+    $background-color-dark: mix($primary-color-dark, white, 90%);
     $text-color-dark: mix($primary-color-dark, white, 10%);
 
     $typography-config: mat.define-typography-config();
@@ -56,7 +56,7 @@
     @return (
         primary: $primary-palette,
         accent: create-palette($accent),
-        warn: create-palette($warn, ),
+        warn: create-palette($warn),
         error: create-palette($error),
         success: create-palette($success),
         background: (
@@ -68,8 +68,8 @@
     );
 }
 
-@function create-palette($color, $lighter: color.mix($color, white, 27%), $darker: color.mix($color, black, 27%)) {
-    @return mat.define-palette((
+@function create-palette($color, $lighter: color.mix($color, white, 15%), $darker: color.mix($color, black, 15%)) {
+    $base-colors: (
         50: color.mix($lighter, $color, 60%),
         100: color.mix($lighter, $color, 50%),
         200: color.mix($lighter, $color, 30%),
@@ -83,25 +83,25 @@
         A100: color.mix($lighter, $color, 25%),
         A200: color.mix($lighter, $color, 15%),
         A400: color.mix($lighter, $color, 5%),
-        A700: color.mix($darker, $color, 10%),
-        contrast: (
-            50: $darker,
-            100: $darker,
-            200: $darker,
-            300: $darker,
-            400: $darker,
-            500: $darker,
-            600: $lighter,
-            700: $lighter,
-            800: $lighter,
-            900: $lighter,
-            A100: $darker,
-            A200: $darker,
-            A400: $lighter,
-            A700: $lighter,
-            contrast: $darker
-        ),
-    ), $text: 50);
+        A700: color.mix($darker, $color, 10%)
+    );
+    $contrast-colors: (
+        50: if(color.lightness(map.get($base-colors, 50)) < 50%, $lighter, $darker),
+        100: if(color.lightness(map.get($base-colors, 100)) < 50%, $lighter, $darker),
+        200: if(color.lightness(map.get($base-colors, 200)) < 50%, $lighter, $darker),
+        300: if(color.lightness(map.get($base-colors, 300)) < 50%, $lighter, $darker),
+        400: if(color.lightness(map.get($base-colors, 400)) < 50%, $lighter, $darker),
+        500: if(color.lightness(map.get($base-colors, 500)) < 50%, $lighter, $darker),
+        600: if(color.lightness(map.get($base-colors, 600)) < 50%, $lighter, $darker),
+        700: if(color.lightness(map.get($base-colors, 700)) < 50%, $lighter, $darker),
+        800: if(color.lightness(map.get($base-colors, 800)) < 50%, $lighter, $darker),
+        900: if(color.lightness(map.get($base-colors, 900)) < 50%, $lighter, $darker),
+        A100: if(color.lightness(map.get($base-colors, A100)) < 50%, $lighter, $darker),
+        A200: if(color.lightness(map.get($base-colors, A200)) < 50%, $lighter, $darker),
+        A400: if(color.lightness(map.get($base-colors, A400)) < 50%, $lighter, $darker),
+        A700: if(color.lightness(map.get($base-colors, A700)) < 50%, $lighter, $darker),
+    );
+    @return mat.define-palette(map.merge($base-colors, (contrast: $contrast-colors)), $text: 50);
 }
 
 /**
