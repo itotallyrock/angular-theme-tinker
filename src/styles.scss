@@ -1,9 +1,20 @@
 
-:root {
-    --primary-color: #0a84ff;
-    --primary-color-darker: #075cb3;
-    --primary-color-lighter: #cee6ff;
-    --secondary-color: #ff6917;
-    --secondary-color-darker: #e65f15;
-    --secondary-color-lighter: #ff965d;
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+@use './themes' as themes;
+
+// Include the common styles for Angular Material
+@include mat.core();
+
+// Apply themes
+@include themes.theme-app();
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }

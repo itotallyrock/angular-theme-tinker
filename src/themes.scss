@@ -1,0 +1,93 @@
+@use '@angular/material' as mat;
+@use 'sass:color' as color;
+@use 'sass:map' as map;
+
+
+@mixin theme-app() {
+    $primary-color: #607386;
+    $accent-color: #3494f8;
+    $warn-color: #e8bc2c;
+    $error-color: #f44336;
+    $success-color: #36f45c;
+
+    $color-config: create-color-config($primary-color, $accent-color, $warn-color, $error-color, $success-color);
+    $typography-config: mat.define-typography-config();
+
+    $light-theme: create-theme((color: $color-config, typography: $typography-config, density: 0), $is-dark: false);
+    $dark-theme: create-theme((color: $color-config, typography: $typography-config, density: 0), $is-dark: true);
+
+    // Apply themes to app using operating system preference
+    @media (prefers-color-scheme: light) {
+        @include mat.all-component-colors($light-theme);
+    }
+    @media (prefers-color-scheme: dark) or (prefers-color-scheme: no-preference) {
+        @include mat.all-component-colors($dark-theme);
+    }
+}
+
+@function create-theme($base-theme, $is-dark) {
+    $theme: null;
+    @if $is-dark {
+        $theme: mat.define-dark-theme($base-theme);
+    } @else {
+        $theme: mat.define-light-theme($base-theme);
+    }
+
+    // Add back base theme overrides
+    $theme: map.deep-merge($theme, $base-theme);
+
+    @return $theme;
+}
+
+@function create-color-config($primary, $accent, $warn, $error, $success) {
+    $primary-palette: create-palette($primary);
+    @return (
+        primary: $primary-palette,
+        accent: create-palette($accent),
+        warn: create-palette($warn),
+        error: create-palette($error),
+        success: create-palette($success),
+        background: (
+            background: map.get($primary-palette, 50),
+        ),
+        foreground: (
+            text: map.get($primary-palette, text),
+        )
+    );
+}
+
+@function create-palette($color, $lighter: white, $darker: black) {
+    @return mat.define-palette((
+        50: color.mix($color, $lighter, 90%),
+        100: color.mix($color, $lighter, 70%),
+        200: color.mix($color, $lighter, 50%),
+        300: color.mix($color, $lighter, 30%),
+        400: color.mix($color, $lighter, 10%),
+        500: $color,
+        600: color.mix($color, $darker, 10%),
+        700: color.mix($color, $darker, 30%),
+        800: color.mix($color, $darker, 50%),
+        900: color.mix($color, $darker, 70%),
+        A100: color.mix($color, $lighter, 90%),
+        A200: color.mix($color, $lighter, 70%),
+        A400: color.mix($color, $darker, 70%),
+        A700: color.mix($color, $darker, 90%),
+        contrast: (
+            50: #000000,
+            100: #000000,
+            200: #000000,
+            300: #000000,
+            400: #ffffff,
+            500: #ffffff,
+            600: #ffffff,
+            700: #ffffff,
+            800: #ffffff,
+            900: #ffffff,
+            A100: #000000,
+            A200: #000000,
+            A400: #ffffff,
+            A700: #ffffff,
+            contrast: #000000,
+        ),
+    ), $text: 50);
+}
