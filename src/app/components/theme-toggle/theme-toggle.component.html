@@ -1,0 +1,5 @@
+<button mat-button aria-label="Toggle Theme" (click)="nextTheme()"
+        [color]="theme() === 'light' ? 'accent' : 'warn'">
+    {{ theme() === 'light' ? 'Enable Dark Mode' : 'Enable Light Mode' }}
+    <mat-icon iconPositionEnd>{{ theme() === 'light' ? 'dark_mode' : 'light_mode' }}</mat-icon>
+</button>

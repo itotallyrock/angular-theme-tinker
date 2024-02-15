@@ -7,13 +7,14 @@ import { MatCard, MatCardFooter, MatCardHeader, MatCardTitle } from '@angular/ma
 import { ColorPickerComponent } from './components/color-picker/color-picker.component';
 import { MatIcon } from '@angular/material/icon';
 import { DOCUMENT } from '@angular/common';
+import { getPreviousTheme, ThemeToggleComponent, ThemeType } from './components/theme-toggle/theme-toggle.component';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     imports: [
         RouterOutlet, ThemeViewerComponent, MatButton, MatCard, MatCardTitle, MatCardHeader, MatCardFooter,
-        ColorPickerComponent, MatIcon,
+        ColorPickerComponent, MatIcon, ThemeToggleComponent,
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
@@ -23,5 +24,10 @@ export class AppComponent {
 
     protected updateColor(color: string, palette: 'accent' | 'warn' | 'error' | 'success'): void {
         this.document.documentElement.style.setProperty(`--theme-${palette}`, color);
+    }
+
+    public updateTheme(theme: ThemeType): void {
+        this.document.body.classList.remove(`${getPreviousTheme(theme)}-themed`);
+        this.document.body.classList.add(`${theme}-themed`);
     }
 }
