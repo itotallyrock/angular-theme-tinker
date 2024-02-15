@@ -48,6 +48,10 @@
     @include mat.icon-button-color($lighterPrimaryTheme);
     @include mat.button-color($lighterPrimaryTheme);
     @include mat.fab-color($lighterPrimaryTheme);
+
+    a {
+        color: map.get(map.get(map.get($theme, color), accent), 500);
+    }
 }
 
 @function create-theme($base-theme, $is-dark) {
