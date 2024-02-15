@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { MatFormField, MatOption, MatSelect } from '@angular/material/select';
 import { NgForOf } from '@angular/common';
-import { MatCard, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { ThemeViewerColorGridComponent } from './theme-viewer-color-grid/theme-viewer-color-grid.component';
+import { ThemeViewerTypographyComponent } from './theme-viewer-typography/theme-viewer-typography.component';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
     selector: 'theme-viewer',
@@ -14,6 +16,9 @@ import { ThemeViewerColorGridComponent } from './theme-viewer-color-grid/theme-v
         MatCardTitle,
         MatCardHeader,
         ThemeViewerColorGridComponent,
+        ThemeViewerTypographyComponent,
+        MatCardContent,
+        MatDivider,
     ],
 })
 export class ThemeViewerComponent {
