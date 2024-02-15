@@ -1,0 +1,191 @@
+@for (variant of ['Basic', 'Raised', 'Stroked', 'Flat', 'Icon', 'FAB', 'Mini-FAB']; track variant) {
+    @for (color of ['basic', 'primary', 'accent', 'warn', 'disabled']; track color) {
+        @switch (variant.toLowerCase()) {
+            @case ('basic') {
+                <button mat-button [color]="color" [disabled]="color === 'disabled'">{{ variant }}</button>
+            }
+            @case ('raised') {
+                <button mat-raised-button [color]="color" [disabled]="color === 'disabled'">{{ variant }}</button>
+            }
+            @case ('stroked') {
+                <button mat-stroked-button [color]="color" [disabled]="color === 'disabled'">{{ variant }}</button>
+            }
+            @case ('flat') {
+                <button mat-flat-button [color]="color" [disabled]="color === 'disabled'">{{ variant }}</button>
+            }
+            @case ('icon') {
+                <button mat-icon-button [color]="color" [disabled]="color === 'disabled'">
+                    <mat-icon>mood</mat-icon>
+                </button>
+            }
+            @case ('fab') {
+                <button mat-fab [color]="color" [disabled]="color === 'disabled'">
+                    <mat-icon>mood</mat-icon>
+                </button>
+            }
+            @case ('mini-fab') {
+                <button mat-mini-fab [color]="color" [disabled]="color === 'disabled'">
+                    <mat-icon>mood</mat-icon>
+                </button>
+            }
+        }
+    }
+}
+
+<!--<div class="button-row" data-testid="basic-button-row">-->
+<!--    <button mat-button data-testid="basic-basic-button">Basic</button>-->
+<!--    <button mat-button color="primary" data-testid="basic-primary-button">Primary</button>-->
+<!--    <button mat-button color="accent" data-testid="basic-accent-button">Accent</button>-->
+<!--    <button mat-button color="warn" data-testid="basic-warn-button">Warn</button>-->
+<!--    <button mat-button disabled data-testid="basic-disabled-button">Disabled</button>-->
+<!--    <a mat-button href="https://www.google.com/" target="_blank" data-testid="basic-link-button">Link</a>-->
+<!--</div>-->
+<!--<div class="button-row" data-testid="raised-button-row">-->
+<!--    <button mat-raised-button data-testid="raised-basic-button">Basic</button>-->
+<!--    <button mat-raised-button color="primary" data-testid="raised-primary-button">Primary</button>-->
+<!--    <button mat-raised-button color="accent" data-testid="raised-accent-button">Accent</button>-->
+<!--    <button mat-raised-button color="warn" data-testid="raised-warn-button">Warn</button>-->
+<!--    <button mat-raised-button disabled data-testid="raised-disabled-button">Disabled</button>-->
+<!--    <a mat-raised-button href="https://www.google.com/" target="_blank" data-testid="raised-link-button">Link</a>-->
+<!--</div>-->
+<!--<div class="button-row" data-testid="stroked-button-row">-->
+<!--    <button mat-stroked-button data-testid="stroked-basic-button">Basic</button>-->
+<!--    <button mat-stroked-button color="primary" data-testid="stroked-primary-button">Primary</button>-->
+<!--    <button mat-stroked-button color="accent" data-testid="stroked-accent-button">Accent</button>-->
+<!--    <button mat-stroked-button color="warn" data-testid="stroked-warn-button">Warn</button>-->
+<!--    <button mat-stroked-button disabled data-testid="stroked-disabled-button">Disabled</button>-->
+<!--    <a mat-stroked-button href="https://www.google.com/" target="_blank" data-testid="stroked-link-button">Link</a>-->
+<!--</div>-->
+<!--<div class="button-row" data-testid="flat-button-row">-->
+<!--    <button mat-flat-button data-testid="flat-basic-button">Basic</button>-->
+<!--    <button mat-flat-button color="primary" data-testid="flat-primary-button">Primary</button>-->
+<!--    <button mat-flat-button color="accent" data-testid="flat-accent-button">Accent</button>-->
+<!--    <button mat-flat-button color="warn" data-testid="flat-warn-button">Warn</button>-->
+<!--    <button mat-flat-button disabled data-testid="flat-disabled-button">Disabled</button>-->
+<!--    <a mat-flat-button href="https://www.google.com/" target="_blank" data-testid="flat-link-button">Link</a>-->
+<!--</div>-->
+<!--<div class="flex-container">-->
+<!--    <button-->
+<!--            mat-icon-button-->
+<!--            aria-label="Example icon button with a vertical three dot icon"-->
+<!--            data-testid="icon-more-vert-button"-->
+<!--    >-->
+<!--        <mat-icon>more_vert</mat-icon>-->
+<!--    </button>-->
+<!--    <button-->
+<!--            mat-icon-button-->
+<!--            color="primary"-->
+<!--            aria-label="Example icon button with a home icon"-->
+<!--            data-testid="icon-home-button"-->
+<!--    >-->
+<!--        <mat-icon>home</mat-icon>-->
+<!--    </button>-->
+<!--    <button-->
+<!--            mat-icon-button-->
+<!--            color="accent"-->
+<!--            aria-label="Example icon button with a menu icon"-->
+<!--            data-testid="icon-menu-button"-->
+<!--    >-->
+<!--        <mat-icon>menu</mat-icon>-->
+<!--    </button>-->
+<!--    <button-->
+<!--            mat-icon-button-->
+<!--            color="warn"-->
+<!--            aria-label="Example icon button with a heart icon"-->
+<!--            data-testid="icon-favorite-button"-->
+<!--    >-->
+<!--        <mat-icon>favorite</mat-icon>-->
+<!--    </button>-->
+<!--    <button-->
+<!--            mat-icon-button-->
+<!--            disabled-->
+<!--            aria-label="Example icon button with a open in new tab icon"-->
+<!--            data-testid="disabled-icon-open-in-new-button"-->
+<!--    >-->
+<!--        <mat-icon>open_in_new</mat-icon>-->
+<!--    </button>-->
+<!--</div>-->
+<!--<div class="flex-container">-->
+<!--    <div class="button-container">-->
+<!--        <button-->
+<!--                mat-fab-->
+<!--                color="primary"-->
+<!--                aria-label="Example icon button with a delete icon"-->
+<!--                data-testid="fab-delete-button"-->
+<!--        >-->
+<!--            <mat-icon>delete</mat-icon>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--    <div class="button-container">-->
+<!--        <button-->
+<!--                mat-fab-->
+<!--                color="accent"-->
+<!--                aria-label="Example icon button with a bookmark icon"-->
+<!--                data-testid="fab-bookmark-button"-->
+<!--        >-->
+<!--            <mat-icon>bookmark</mat-icon>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--    <div class="button-container">-->
+<!--        <button-->
+<!--                mat-fab-->
+<!--                color="warn"-->
+<!--                aria-label="Example icon button with a home icon"-->
+<!--                data-testid="fab-home-button"-->
+<!--        >-->
+<!--            <mat-icon>home</mat-icon>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--    <div class="button-container">-->
+<!--        <button-->
+<!--                mat-fab-->
+<!--                disabled-->
+<!--                aria-label="Example icon button with a heart icon"-->
+<!--                data-testid="disabled-fab-favorite-button"-->
+<!--        >-->
+<!--            <mat-icon>favorite</mat-icon>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="flex-container">-->
+<!--    <div class="button-container">-->
+<!--        <button-->
+<!--                mat-mini-fab-->
+<!--                color="primary"-->
+<!--                aria-label="Example icon button with a menu icon"-->
+<!--                data-testid="mini-fab-menu-button"-->
+<!--        >-->
+<!--            <mat-icon>menu</mat-icon>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--    <div class="button-container">-->
+<!--        <button-->
+<!--                mat-mini-fab-->
+<!--                color="accent"-->
+<!--                aria-label="Example icon button with a plus one icon"-->
+<!--                data-testid="mini-fab-plus-one-button"-->
+<!--        >-->
+<!--            <mat-icon>plus_one</mat-icon>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--    <div class="button-container">-->
+<!--        <button-->
+<!--                mat-mini-fab-->
+<!--                color="warn"-->
+<!--                aria-label="Example icon button with a filter list icon"-->
+<!--                data-testid="mini-fab-filter-list-button"-->
+<!--        >-->
+<!--            <mat-icon>filter_list</mat-icon>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--    <div class="button-container">-->
+<!--        <button-->
+<!--                mat-mini-fab-->
+<!--                disabled-->
+<!--                aria-label="Example icon button with a home icon"-->
+<!--                data-testid="disabled-mini-fab-home-button"-->
+<!--        >-->
+<!--            <mat-icon>home</mat-icon>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</div>-->

@@ -5,6 +5,7 @@ import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/m
 import { ThemeViewerColorGridComponent } from './theme-viewer-color-grid/theme-viewer-color-grid.component';
 import { ThemeViewerTypographyComponent } from './theme-viewer-typography/theme-viewer-typography.component';
 import { MatDivider } from '@angular/material/divider';
+import { ThemeViewerButtonsComponent } from './theme-viewer-buttons/theme-viewer-buttons.component';
 
 @Component({
     selector: 'theme-viewer',
@@ -19,6 +20,7 @@ import { MatDivider } from '@angular/material/divider';
         ThemeViewerTypographyComponent,
         MatCardContent,
         MatDivider,
+        ThemeViewerButtonsComponent,
     ],
 })
 export class ThemeViewerComponent {
