@@ -3,16 +3,16 @@
         <div class="color-palette-header">
             <h1>Color Palettes</h1>
             <div>
-                <app-color-picker defaultColor="#3494f8" (colorChanged)="updateColor($event, 'accent')">
+                <app-color-picker defaultColor="#3494f8" aria-label="Pick an Accent color" (colorChanged)="updateColor($event, 'accent')">
                     Accent
                 </app-color-picker>
-                <app-color-picker defaultColor="#e8bc2c" (colorChanged)="updateColor($event, 'warn')">
+                <app-color-picker defaultColor="#e8bc2c" aria-label="Pick an Warn color" (colorChanged)="updateColor($event, 'warn')">
                     Warn
                 </app-color-picker>
-                <app-color-picker defaultColor="#36f45c" (colorChanged)="updateColor($event, 'success')">
+                <app-color-picker defaultColor="#36f45c" aria-label="Pick an Success color" (colorChanged)="updateColor($event, 'success')">
                     Success
                 </app-color-picker>
-                <app-color-picker defaultColor="#f44336" (colorChanged)="updateColor($event, 'error')">
+                <app-color-picker defaultColor="#f44336" aria-label="Pick an Error color" (colorChanged)="updateColor($event, 'error')">
                     Error
                 </app-color-picker>
             </div>

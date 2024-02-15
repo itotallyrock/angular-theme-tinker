@@ -3,9 +3,9 @@
     [style.background-color]="color()"
     [style.color]="contrastColor()"
     (click)="picker.click()"
-    aria-hidden="true"
+    [attr.aria-label]="ariaLabel()"
 >
     <ng-content></ng-content>
     <mat-icon>palette</mat-icon>
 </button>
-<input #picker type="color" [attr.aria-label]="ariaLabel()" [value]="defaultColor()" (change)="colorChanged($event)">
+<input #picker type="color" tabindex="-1" aria-hidden="true" [value]="defaultColor()" (change)="colorChanged($event)">
