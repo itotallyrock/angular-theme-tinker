@@ -32,13 +32,22 @@
 
     @include mat.all-component-typographies($light-theme);
     .light-themed {
-        @include mat.all-component-colors($light-theme);
-        @include add-theme-css-variables($light-theme);
+        @include include-theme($light-theme);
     }
     .dark-themed {
-        @include mat.all-component-colors($dark-theme);
-        @include add-theme-css-variables($dark-theme);
+        @include include-theme($dark-theme);
     }
+}
+
+@mixin include-theme($theme) {
+    @include mat.all-component-colors($theme);
+    @include add-theme-css-variables($theme);
+
+    $lighterDefaultColor: color-mix(in srgb, map.get(map.get(map.get($theme, color), background), background) 50%, map.get(map.get(map.get($theme, color), accent), 200));
+    $lighterPrimaryTheme: map.deep-merge($theme, (color: (primary: (default: $lighterDefaultColor))));
+    @include mat.icon-button-color($lighterPrimaryTheme);
+    @include mat.button-color($lighterPrimaryTheme);
+    @include mat.fab-color($lighterPrimaryTheme);
 }
 
 @function create-theme($base-theme, $is-dark) {
@@ -68,6 +77,7 @@
         ),
         foreground: (
             text: $text-color,
+            divider: color-mix(in srgb, $text-color 50%, $background-color),
         )
     );
 }
@@ -89,24 +99,26 @@
         A400: color-mix(in srgb, $lighter 5%, $color),
         A700: color-mix(in srgb, $darker 10%, $color)
     );
-    // TODO: Use HSL to get luminance and use that to determine contrast color
+    // TODO: Try to use HSL increase luminance and use that to determine contrast color
     $contrast-colors: (
-        50: $darker,//if(color.lightness(map.get($base-colors, 50)) < 50%, $lighter, $darker),
-        100: $darker,//if(color.lightness(map.get($base-colors, 100)) < 50%, $lighter, $darker),
-        200: $darker,//if(color.lightness(map.get($base-colors, 200)) < 50%, $lighter, $darker),
-        300: $darker,//if(color.lightness(map.get($base-colors, 300)) < 50%, $lighter, $darker),
-        400: $darker,//if(color.lightness(map.get($base-colors, 400)) < 50%, $lighter, $darker),
-        500: $darker,//if(color.lightness(map.get($base-colors, 500)) < 50%, $lighter, $darker),
-        600: $lighter,//if(color.lightness(map.get($base-colors, 600)) < 50%, $lighter, $darker),
-        700: $lighter,//if(color.lightness(map.get($base-colors, 700)) < 50%, $lighter, $darker),
-        800: $lighter,//if(color.lightness(map.get($base-colors, 800)) < 50%, $lighter, $darker),
-        900: $lighter,//if(color.lightness(map.get($base-colors, 900)) < 50%, $lighter, $darker),
-        A100: $darker,//if(color.lightness(map.get($base-colors, A100)) < 50%, $lighter, $darker),
-        A200: $darker,//if(color.lightness(map.get($base-colors, A200)) < 50%, $lighter, $darker),
-        A400: $lighter,//if(color.lightness(map.get($base-colors, A400)) < 50%, $lighter, $darker),
-        A700: $lighter,//if(color.lightness(map.get($base-colors, A700)) < 50%, $lighter, $darker),
+        50: color-mix(in srgb, map.get($base-colors, 50) 10%, $darker),
+        100: color-mix(in srgb, map.get($base-colors, 100) 10%, $darker),
+        200: color-mix(in srgb, map.get($base-colors, 200) 10%, $darker),
+        300: color-mix(in srgb, map.get($base-colors, 300) 10%, $darker),
+        400: color-mix(in srgb, map.get($base-colors, 400) 10%, $darker),
+        500: color-mix(in srgb, map.get($base-colors, 500) 10%, $darker),
+        600: color-mix(in srgb, map.get($base-colors, 600) 10%, $lighter),
+        700: color-mix(in srgb, map.get($base-colors, 700) 10%, $lighter),
+        800: color-mix(in srgb, map.get($base-colors, 800) 10%, $lighter),
+        900: color-mix(in srgb, map.get($base-colors, 900) 10%, $lighter),
+        A100: color-mix(in srgb, map.get($base-colors, A100) 10%, $darker),
+        A200: color-mix(in srgb, map.get($base-colors, A200) 10%, $darker),
+        A400: color-mix(in srgb, map.get($base-colors, A400) 10%, $lighter),
+        A700: color-mix(in srgb, map.get($base-colors, A700) 10%, $lighter),
     );
-    @return mat.define-palette(map.merge($base-colors, (contrast: $contrast-colors)), $text: 50);
+    @return mat.define-palette(map.merge($base-colors, (
+        contrast: $contrast-colors)
+    ), $text: 50);
 }
 
 /**
