@@ -1,0 +1,11 @@
+<button
+    mat-flat-button
+    [style.background-color]="color()"
+    [style.color]="contrastColor()"
+    (click)="picker.click()"
+    aria-hidden="true"
+>
+    <ng-content></ng-content>
+    <mat-icon>palette</mat-icon>
+</button>
+<input #picker type="color" [attr.aria-label]="ariaLabel()" [value]="defaultColor()" (change)="colorChanged($event)">

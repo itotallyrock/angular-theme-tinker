@@ -1,0 +1,17 @@
+@use 'sass:math' as math;
+
+$line-height: 2rem;
+
+button {
+    line-height: $line-height;
+}
+
+input {
+    width: 0;
+    height: 0;
+    position: relative;
+    left: -50%;
+    top: math.div($line-height, 2);
+    opacity: 0;
+    z-index: -100;
+}
